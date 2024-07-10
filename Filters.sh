@@ -85,7 +85,7 @@ bcftools view --types snps -m 2 -M 2 --threads 4 vcffile_RD0_2__1_5_misssites09_
 git clone https://github.com/Ensembl/plant-scripts.git
 
 #I ran the program like this:
-./Red2Ensembl.py --exe /pathtoscripts/plant-scripts/plant-scripts/lib/Red/bin/Red --cor 9 --msk_file Redmasked.fasta --bed_file Redmasked.bed REF.fasta
+./Red2Ensembl.py --exe /pathtoscripts/plant-scripts/plant-scripts/lib/Red/bin/Red --cor 9 --msk_file Redmasked.fasta --bed_file Redmasked.bed REF.fasta OUTDIR
 
 #Then you could filtrate the SNPs in repetitive regions like this:
 bedtools intersect -a vcffile_RD0_2__1_5_misssites09_missind095_MAF10_biallelic.vcf.gz -b Redmasked.bed -sorted -g REF.bed -v
