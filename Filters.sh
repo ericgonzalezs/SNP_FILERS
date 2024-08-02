@@ -1,5 +1,11 @@
+# selecting only biallelic SNPs:
+bcftools view --types snps -m 2 -M 2 --threads 4 input.vcf.gz -Oz -o output_biallelic.vcf.gz
+
+# filter the file for genotype quality
+bcftools filter -i 'FMT/GQ >= 20' output_biallelic.vcf.gz -o filtered_GQ20.vcf
+
 #1.- Calculate missing data with plink v2.0:
-plink2 --vcf vcfile.vcf.gz --missing vcols=chrom,pos,nmiss,fmiss --allow-extra-chr --out missing.out
+plink2 --vcf filtered_GQ20.vcf --missing vcols=chrom,pos,nmiss,fmiss --allow-extra-chr --out missing.out
 
 #2.- Calculate read depth with vcftools v0.1.16:
 vcftools --gzvcf vcfile.vcf.gz --site-mean-depth --out RD
@@ -75,8 +81,8 @@ bcftools view -i 'MAF > 0.1' vcffile_RD0_2__1_5_misssites09_missind095.vcf.gz | 
 # you could check MAF values like this and decide if to filter them or not
 vcftools --gzvcf vcfile.vcf.gz --freq2 --out MAF --max-alleles 2
 
-#Filter to keep only biallelic sites
-bcftools view --types snps -m 2 -M 2 --threads 4 vcffile_RD0_2__1_5_misssites09_missind095_MAF10.vcf.gz -Oz -o vcffile_RD0_2__1_5_misssites09_missind095_MAF10_biallelic.vcf.gz
+#Filter to keep only biallelic sites, ya está arriba
+#bcftools view --types snps -m 2 -M 2 --threads 4 vcffile_RD0_2__1_5_misssites09_missind095_MAF10.vcf.gz -Oz -o vcffile_RD0_2__1_5_misssites09_missind095_MAF10_biallelic.vcf.gz
 
 #7.- filter repetitive regions
 #I used this software https://github.com/Ensembl/plant-scripts/tree/master/repeats
